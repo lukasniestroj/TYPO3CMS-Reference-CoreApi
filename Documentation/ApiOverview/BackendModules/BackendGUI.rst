@@ -15,56 +15,56 @@ It is divided into the following main areas:
 .. include:: /Images/AutomaticScreenshots/BackendModules/BackendModulesAreas.rst.txt
 
 Top bar
-  The top bar is always present. It is itself divided into two
-  areas: the logo and top bar tools.
+   The top bar is always present. It is itself divided into two
+   areas: the logo and top bar tools.
 
-  The logo can be changed using the :php:`$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['backend']['backendLogo']` option.
-  Additional top bar tools can be registered using
-  :php:`$GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems']`.
+   The logo can be changed using the :php:`$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['backend']['backendLogo']` option.
+   Additional top bar tools can be registered using
+   :php:`$GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems']`.
 
 Module menu
-  This is the main navigation. All modules are structured in main
-  modules (which can be collapsed) and submodules which is where
-  the action really happens.
+   This is the main navigation. All modules are displayed in top-level sections
+   that can be collapsed. See :ref:`backend-modules-toplevel-module`.
 
-  The module menu can be opened or closed by using the icon on the top left.
+   The module menu can be opened or closed by using the icon on the top left.
 
-  New main or submodules are registered using the
-  :php:`\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule()`
-  API.
+   New modules are registered in an extensions module configuration file,
+   :file:`Configuration/Backend/Modules.php`. See :ref:`backend-modules-configuration`.
 
-  .. note::
+   .. note::
 
      In the TYPO3 CMS world, "module" is typically used for
      the backend. Extension components which add features in the frontend
      are referred to as "plugins".
 
-Navigation frame
-  Any backend module may have a navigation frame or not. This frame
-  will typically display the page tree or the folder tree, but
-  custom navigation frames are possible.
+Navigation component
+   Any backend module may have a navigation component or not. The Core
+   provides two navigation components by default:  The pagetree as in the
+   module :guilabel:`Web > Page` and the file tree as displayed in the module
+   :guilabel:`File > Filelist`. The navigation component to be displayed can be
+   influenced by :confval:`navigationComponent`.
 
-  The current location (i.e. page or frame) is carried over between
-  navigation frames when changing modules. This means, for example, that
-  when you move from the **WEB > Page** module to the **WEB > List**
-  module, the same page stays selected in the page tree.
+   The current location in the navigation components tree is carried over between
+   navigation frames when changing modules. This means, for example, that
+   when you move from the :guilabel:`Web > Page` module to the
+   :guilabel:`Web > List` module, the same page stays selected in the page tree.
 
 Docheader
-  This part is always located above the Content area. It will generally
-  contain a drop-down menu called the "Function menu", which allows to
-  navigate into the various functions offered by the module. When editing
-  it will also contain all the buttons necessary for saving, closing or
-  reverting. It may contain additional buttons for shortcuts
-  or any specific feature needed by the module.
+   This part is always located above the Content area. It will generally
+   contain a drop-down menu called the "Function menu", which allows to
+   navigate into the various functions offered by the module. When editing
+   it will also contain all the buttons necessary for saving, closing or
+   reverting. It may contain additional buttons for shortcuts
+   or any specific feature needed by the module.
 
 Content area
-  This is the actual work area. Any information to show or content
-  to edit will be displayed here.
+   This is the actual work area. Any information to show or content
+   to edit will be displayed here.
 
 Contextual menus
-  (Right) clicking on record icons will often reveal a contextual menu.
-  New functions can be added to the contextual menus, but the
-  mechanisms vary: the page tree behaves differently than the
-  rest of the backend.
+   (Right) clicking on record icons will often reveal a contextual menu.
+   New functions can be added to the contextual menus, but the
+   mechanisms vary: the page tree behaves differently than the
+   rest of the backend.
 
-  .. include:: /Images/AutomaticScreenshots/BackendModules/BackendModulesContextualMenu.rst.txt
+   .. include:: /Images/AutomaticScreenshots/BackendModules/BackendModulesContextualMenu.rst.txt

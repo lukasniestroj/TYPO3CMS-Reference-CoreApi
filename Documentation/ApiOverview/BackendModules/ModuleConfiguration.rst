@@ -14,7 +14,7 @@ Backend module configuration
    left of this document to go to the respective version.
 
 The configuration of backend modules is placed in the
-dedicated :file:`Configuration/Backend/Modules.php` configuration file.
+dedicated configuration file: :file:`Configuration/Backend/Modules.php`.
 
 Those files are then read and processed when building the container. This
 means the state is fixed and cannot be changed at runtime.
