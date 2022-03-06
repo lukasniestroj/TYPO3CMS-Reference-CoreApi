@@ -55,7 +55,8 @@ Docheader
    navigate into the various functions offered by the module. When editing
    it will also contain all the buttons necessary for saving, closing or
    reverting. It may contain additional buttons for shortcuts
-   or any specific feature needed by the module.
+   or any specific feature needed by the module. The Docheader can be modified
+   by the :ref:`ModifyButtonBarEvent <ModifyButtonBarEvent>`.
 
 Content area
    This is the actual work area. Any information to show or content
