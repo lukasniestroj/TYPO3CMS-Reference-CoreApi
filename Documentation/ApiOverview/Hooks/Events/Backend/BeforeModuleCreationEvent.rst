@@ -39,4 +39,4 @@ The corresponding event listener class:
 API
 ===
 
-
+.. include:: /CodeSnippets/Manual/Backend/BeforeModuleCreationEvent.rst.txt
