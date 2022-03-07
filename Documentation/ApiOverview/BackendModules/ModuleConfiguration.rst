@@ -243,7 +243,7 @@ Extbase module configuration options
    :Scope: Backend module configuration
    :type: string
 
-   The extension name in UpperCamelCase, the module is registered for. If the
+   The extension name in UpperCamelCase that the module is registered for. If the
    extension key is `my_example_extension` the extension name would be
    `MyExampleExtension`.
 
