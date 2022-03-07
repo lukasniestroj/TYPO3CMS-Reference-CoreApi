@@ -26,7 +26,7 @@ The following toplevel modules are provided by the Core:
    configuration array of a module displayed here should always have the
    following key-value pair: :php:`'access' => 'systemMaintainer'`.
 
-   In this toplevel section modules that deal with installing, updating the Core
+   In this toplevel section are modules that deal with installing, updating the Core
    and extensions. System-wide settings are also found here.
 
 `system`: System
