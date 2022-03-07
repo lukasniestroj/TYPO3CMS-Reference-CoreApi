@@ -283,5 +283,5 @@ module.
 
 .. include:: /Images/ManualScreenshots/Backend/BackendModulesConfiguration.rst.txt
 
-The :ref:`ModuleProvider <backend-module-provider-api>` API, allows extension
+The :ref:`ModuleProvider <backend-module-provider-api>` API allows extension
 authors to work with the registered modules.
