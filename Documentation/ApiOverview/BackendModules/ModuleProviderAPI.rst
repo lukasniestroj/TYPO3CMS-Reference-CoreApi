@@ -6,7 +6,7 @@
 ModuleProvider API
 ===================
 
-The :php:`ModuleProvider` API, allows extension authors to work with the
+The :php:`ModuleProvider` API allows extension authors to work with the
 registered modules.
 
 This API is the central point to retrieve modules, since it
