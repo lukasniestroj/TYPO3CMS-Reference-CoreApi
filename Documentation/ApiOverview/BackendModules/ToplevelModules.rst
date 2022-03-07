@@ -35,8 +35,8 @@ The following toplevel modules are provided by the Core:
    displayed here should always have the following key-value pair:
    :php:`'access' => 'admin'`.
 
-   In this toplevel section modules are situated that deal with backend user
-   rights or might reveal security relevant data.
+   In this toplevel section are modules that deal with backend user
+   rights and security-relevant data.
 
 Register a custom toplevel module
 ==================================
