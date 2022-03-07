@@ -36,7 +36,7 @@ backend. They are described in this chapter.
 
          .. container:: card-body
 
-            Howto register custom modules provided by extensions.
+            How to register custom modules provided by extensions.
 
 
    .. container:: col-md-6 pl-0 pr-3 py-3 m-0
