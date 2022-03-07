@@ -77,7 +77,7 @@ Module configuration options
    :Scope: Backend module configuration
    :type: string
 
-   If the module should be a submodule, the parent identifier, for example `web`
+   If the module should be a submodule, the parent identifier (for example `web`)
    has to be set here. You can find a
    :ref:`list of available toplevel modules. <backend-modules-toplevel-module>`
 
