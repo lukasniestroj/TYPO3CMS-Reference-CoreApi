@@ -78,31 +78,31 @@ This makes it possible to include e.g. Javascript for all actions in the control
        switch ($this->MOD_SETTINGS['function']) {
            case 'debug':
                $moduleTemplate->setTitle($title, $languageService->getLL('module.menu.debug'));
-               return $this->debugAction($moduleTemplate);
+               return $this->debugAction($request, $moduleTemplate);
            case 'password':
                $moduleTemplate->setTitle($title, $languageService->getLL('module.menu.password'));
-               return $this->passwordAction($moduleTemplate);
+               return $this->passwordAction($request, $moduleTemplate);
            default:
                $moduleTemplate->setTitle($title, $languageService->getLL('module.menu.log'));
-               return $this->logAction($moduleTemplate);
+               return $this->logAction($request, $moduleTemplate);
        }
    }
 
 Actions
 =======
 
-Now create an example :php:`indexAction()` and assign variables to your view
+Now create an example :php:`debugAction()` and assign variables to your view
 as you would normally do.
 
 .. code-block:: php
    :caption: T3docs\Examples\Controller\AdminModuleController
 
-   public function debugAction(
-       ModuleTemplate $view,
-       string $cmd = 'cookies'
+   protected function debugAction(
+       ServerRequestInterface $request,
+       ModuleTemplate $view
    ): ResponseInterface
    {
-       $cmd = $_POST['tx_examples_admin_examples']['cmd'];
+       $cmd = $request->getParsedBody()['tx_examples_admin_examples']['cmd'] ?? 'cookies';
        switch ($cmd) {
            case 'cookies':
                $this->debugCookies();
@@ -111,7 +111,7 @@ as you would normally do.
 
        $view->assignMultiple(
            [
-               'cookies' => $_COOKIE,
+               'cookies' => $request->getCookieParams(),
                'lastcommand' => $cmd,
            ]
        );
@@ -147,8 +147,8 @@ Template example
    <f:layout name="Module" />
 
    <f:section name="Content">
-      <h1><f:translate key="function_debug" extensionName="examples"/></h1>
-      <p><f:translate key="function_debug_intro" extensionName="examples"/></p>
+      <h1><f:translate key="LLL:EXT:examples/Resources/Private/Language/locallang_examples.xlf:function_debug"/></h1>
+      <p><f:translate key="LLL:EXT:examples/Resources/Private/Language/locallang_examples.xlf:function_debug_intro"/></p>
       <p><f:debug inline="1">{cookies}</f:debug></p>
    </f:section>
    </html>

@@ -31,14 +31,11 @@ controller:
 
    // use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
    // use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-   class MyController extends ActionController
+    class MyController extends ActionController
    {
-       protected ModuleTemplateFactory $moduleTemplateFactory;
-
        public function __construct(
-           ModuleTemplateFactory $moduleTemplateFactory,
+           private ModuleTemplateFactory $moduleTemplateFactory,
        ) {
-           $this->moduleTemplateFactory = $moduleTemplateFactory;
        }
    }
 
@@ -90,4 +87,4 @@ the "beuser" extension:
 
 
 The best resources for learning is to look at existing modules
-from TYPO3 CMS. 
+from TYPO3 CMS.
