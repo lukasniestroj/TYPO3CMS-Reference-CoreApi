@@ -11,15 +11,15 @@ without Extbase.
 
 .. tip::
 
-   If you want to do extensive data modeling you may want to
+   In rare cases, where extensive data modeling is necessary, you can
    use :ref:`Extbase templating <backend-modules-template>`.
-   If you build a simple backend module it makes sense to work without Extbase.
+   If in most cases it makes sense to work without Extbase.
 
 Basic controller
 ================
 
-When creating a controller without Extbase an instance of :php:`ModuleTemplate` is required
-to return the rendered template:
+When creating a controller without Extbase an instance of :php:`ModuleTemplate`
+should be used to return the rendered template:
 
 .. code-block:: php
 
@@ -70,12 +70,24 @@ This makes it possible to include e.g. Javascript for all actions in the control
        $languageService = $this->getLanguageService();
        $languageService->includeLLFile('EXT:examples/Resources/Private/Language/AdminModule/locallang.xlf');
 
+       $allowedOptions = [
+           'function' => [
+               'debug' => $languageService->getLL('debug'),
+               'password' => $languageService->getLL('password'),
+           ],
+       ];
+
+       $moduleData = $request->getAttribute('moduleData');
+       if ($moduleData->cleanUp($allowedOptions)) {
+           $backendUser->pushModuleData($this->moduleData->getModuleIdentifier(), $this->moduleData->toArray());
+       }
+
        $this->menuConfig($request);
        $moduleTemplate = $this->moduleTemplateFactory->create($request, 't3docs/examples');
        $this->setUpDocHeader($moduleTemplate);
 
        $title = $languageService->sL('LLL:EXT:examples/Resources/Private/Language/AdminModule/locallang_mod.xlf:mlang_tabs_tab');
-       switch ($this->MOD_SETTINGS['function']) {
+       switch ($moduleData->get('function')) {
            case 'debug':
                $moduleTemplate->setTitle($title, $languageService->getLL('module.menu.debug'));
                return $this->debugAction($request, $moduleTemplate);

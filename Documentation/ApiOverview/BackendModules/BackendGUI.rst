@@ -39,7 +39,7 @@ Module menu
 
 Navigation component
    Any backend module may have a navigation component or not. The Core
-   provides two navigation components by default:  The pagetree as in the
+   provides two navigation components by default: The pagetree as in the
    module :guilabel:`Web > Page` and the file tree as displayed in the module
    :guilabel:`File > Filelist`. The navigation component to be displayed can be
    influenced by :confval:`navigationComponent`.
