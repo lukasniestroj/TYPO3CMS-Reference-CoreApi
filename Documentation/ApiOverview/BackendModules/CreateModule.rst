@@ -2,9 +2,9 @@
 
 .. _backend-modules-template-without-extbase:
 
-===============================================
-Create a backend module with Core functionality
-===============================================
+=======================
+Create a backend module
+=======================
 
 This page covers the backend template view, using only Core functionality
 without Extbase.
@@ -15,11 +15,46 @@ without Extbase.
    use :ref:`Extbase templating <backend-modules-template>`.
    If in most cases it makes sense to work without Extbase.
 
+Configuration
+=============
+
+The following example configures a backend module in the menu section
+:guilabel:`System` that is only accessible for admins.
+
+The module is entered by the method :php:`handleRequest` in the class
+:php:`T3docs\Examples\Controller\AdminModuleController`, which is described
+below.
+
+.. code-block:: php
+   :caption: EXT:examples/Configuration/Backend/Modules.php
+
+   use T3docs\Examples\Controller\AdminModuleController;
+
+   return [
+       //...
+       'admin_examples' => [
+           'parent' => 'system',
+           'position' => ['top'],
+           'access' => 'admin',
+           'workspaces' => 'live',
+           'path' => '/module/system/example',
+           'labels' => 'LLL:EXT:examples/Resources/Private/Language/AdminModule/locallang_mod.xlf',
+           'extensionName' => 'Examples',
+           'routes' => [
+              '_default' => [
+                  'target' => AdminModuleController::class . '::handleRequest',
+              ],
+          ],
+       ],
+   ];
+
 Basic controller
 ================
 
 When creating a controller without Extbase an instance of :php:`ModuleTemplate`
-should be used to return the rendered template:
+should be used to return the rendered template. The :php:`ModuleTemplateFactory`
+will take care of creating the :php:`ModuleTemplate` for you. We therefore
+inject this factory via :ref:`Dependency Injection <dependency-injection>`:
 
 .. code-block:: php
 
@@ -34,6 +69,13 @@ should be used to return the rendered template:
            // ...
        ) {
        }
+
+      public function handleRequest(ServerRequestInterface $request): ResponseInterface
+      {
+          $moduleTemplate = $this->moduleTemplateFactory->create($request, 't3docs/examples');
+          // doSomething();
+          return $moduleTemplate;
+      }
    }
 
 The controller needs to be registered in the :file:`Configuration/Services.yaml`
@@ -59,8 +101,10 @@ with the tag `backend.controller` so that dependency injection works:
 Main entry point
 ================
 
-:php:`handleRequest()` method is the main entry point which triggers only the allowed actions.
-This makes it possible to include e.g. Javascript for all actions in the controller.
+The main entry point is defined in :confval:`routes` of the module configuration.
+
+In this case the method :php:`handleRequest()` is defined to be the main entry
+point.
 
 .. code-block:: php
    :caption: T3docs\Examples\Controller\AdminModuleController
@@ -103,32 +147,49 @@ This makes it possible to include e.g. Javascript for all actions in the control
 Actions
 =======
 
-Now create an example :php:`debugAction()` and assign variables to your view
-as you would normally do.
+Now create an example :php:`indexAction()` and assign variables to your view
+as you would do for a frontend plugin.
 
 .. code-block:: php
    :caption: T3docs\Examples\Controller\AdminModuleController
 
-   protected function debugAction(
-       ServerRequestInterface $request,
-       ModuleTemplate $view
-   ): ResponseInterface
-   {
-       $cmd = $request->getParsedBody()['tx_examples_admin_examples']['cmd'] ?? 'cookies';
-       switch ($cmd) {
-           case 'cookies':
-               $this->debugCookies();
-               break;
-       }
+    public function indexAction(
+        ServerRequestInterface $request,
+        ModuleTemplate $view
+    ) : ResponseInterface
+    {
+        $view->assign('aVariable', 'aValue');
+        return $view->renderResponse('AdminModule/Index');
+    }
 
-       $view->assignMultiple(
-           [
-               'cookies' => $request->getCookieParams(),
-               'lastcommand' => $cmd,
-           ]
-       );
-       return $view->renderResponse('AdminModule/Debug');
-   }
+The following example is a little more complex and demonstrates how to access
+cookies and GET parameters:
+
+.. code-block:: php
+   :caption: T3docs\Examples\Controller\AdminModuleController
+
+  protected function debugAction(
+        ServerRequestInterface $request,
+        ModuleTemplate $view
+    ): ResponseInterface
+    {
+        $cmd = $request->getParsedBody()['tx_examples_admin_examples']['cmd'] ?? 'cookies';
+        switch ($cmd) {
+            case 'cookies':
+                $this->debugCookies();
+                break;
+            default:
+                // do something else
+        }
+
+        $view->assignMultiple(
+            [
+                'cookies' => $request->getCookieParams(),
+                'lastcommand' => $cmd,
+            ]
+        );
+        return $view->renderResponse('AdminModule/Debug');
+    }
 
 The DocHeader
 =============
@@ -138,15 +199,18 @@ and :php:`makeLinkButton()` to create the button. Finally use :php:`addButton()`
 
 .. code-block:: php
 
-   private function setDocHeader(string $active) {
-      $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
-      $list = $buttonBar->makeLinkButton()
-         ->setHref('<uri-builder-path>')
-         ->setTitle('A Title')
-         ->setShowLabelText('Link')
-         ->setIcon($this->moduleTemplate->getIconFactory()->getIcon('actions-extension-import', Icon::SIZE_SMALL));
-      $buttonBar->addButton($list, ButtonBar::BUTTON_POSITION_LEFT, 1);
-   }
+    private function setUpDocHeader(
+        ServerRequestInterface $request,
+        ModuleTemplate $view
+    ) {
+        $buttonBar = $view->getDocHeaderComponent()->getButtonBar();
+        $list = $buttonBar->makeLinkButton()
+            ->setHref('<uri-builder-path>')
+            ->setTitle('A Title')
+            ->setShowLabelText('Link')
+            ->setIcon($this->iconFactory->getIcon('actions-extension-import', Icon::SIZE_SMALL));
+        $buttonBar->addButton($list, ButtonBar::BUTTON_POSITION_LEFT, 1);
+    }
 
 Template example
 ================
