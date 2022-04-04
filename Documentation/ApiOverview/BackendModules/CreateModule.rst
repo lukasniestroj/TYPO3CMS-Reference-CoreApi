@@ -13,7 +13,8 @@ without Extbase.
 
    In rare cases, where extensive data modeling is necessary, you can
    use :ref:`Extbase templating <backend-modules-template>`.
-   If in most cases it makes sense to work without Extbase.
+   
+   In most cases it makes sense to work without Extbase.
 
 Configuration
 =============
