@@ -50,8 +50,8 @@ Modal settings
 
 ..  confval:: severity
 
-    :type: int
-    :Default: :js:`TYPO3.Severity.info`
+    :type: string
+    :Default: :js:`info`
 
     Represents the severity of a modal. Please see :js:`TYPO3.Severity`.
 
